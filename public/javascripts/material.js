@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             div.innerHTML = `
                 <h3>${m.ime}</h3>
                 <div class="material-content">
-                    <img src="/datoteke/${m.id}" alt="${m.ime}" draggable="false">
+                    <img src="http://localhost:3000/api/datoteke/${m.id}" alt="${m.ime}" draggable="false">
                 </div>
                 <div class="material-labels">${labelsHTML}</div>
                 <button data-id="${m.id}" class="delete-x">&times;</button>
