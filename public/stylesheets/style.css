@@ -1,0 +1,407 @@
+/* ---------------- General ---------------- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header, footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+footer {
+    position: relative; 
+    z-index: 2000;
+    background-color: #333;
+    color: #fff;
+    padding: 0 1rem;      /* only horizontal padding */
+    text-align: center;
+    height: 1cm;           /* total height */
+    line-height: 1cm;      /* vertically center text */
+    font-size: 0.9rem;
+}
+
+/* Remove hr height */
+footer hr {
+    display: none;
+}
+
+main {
+    padding: 2rem;
+    margin-top: 85px;
+    padding-bottom: 0px; 
+}
+
+/* ---------------- Layout ---------------- */
+.main-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap; /* wrap on small screens */
+    min-height: 80vh; /* push footer down */
+}
+
+.content {
+    flex: 1;
+}
+
+.sidebar {
+    width: 360px;            /* ⬅ wider sidebar */
+    background: #fafafa;     /* light background */
+    padding: 20px;
+    border-left: 2px solid #ddd;
+    height: calc(100vh - 140px); /* full height minus header & footer */
+    position: fixed;         /* ⬅ stick to right side */
+    top: 100px;              /* match your header height */
+    right: 0;
+    overflow-y: auto;        /* scroll if needed */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 0px; /* less space under 'Labele' */
+    margin-top: 0px;
+    font-size: 18px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label-group {
+    margin-bottom: 5px; /* less space between tip groups */
+}
+
+.main-layout {
+    display: flex;
+    margin-right: 380px; /* ⬅ leaves space for sidebar width */
+}
+
+/* ---------------- Forms ---------------- */
+form {
+    margin-bottom: 1rem;
+}
+
+form input[type="text"],
+form select,
+form button {
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    margin: 5px 0 10px 0;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+form button {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* ---------------- File Input ---------------- */
+.custom-file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.custom-file-label:hover {
+    background-color: #ddd;
+}
+
+/* ---------------- Cards Row ---------------- */
+.cards-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+/* Add Material Card */
+.add-material-card {
+    width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.add-material-card h2 {
+    margin-top: 10px;        /* remove extra space above title */
+    margin-bottom: 10px;  /* keep small spacing below */
+    line-height: 1.2;     /* tighter text */
+}
+
+/* Add Label Card - half width, hugging sidebar */
+.add-label-card {
+    width: 250px;
+    height: fit-content;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-left: auto; /* push it toward the sidebar */
+}
+
+.add-label-card h2 {
+    margin-top: 10px;        /* remove extra space above title */
+    margin-bottom: 10px;  /* keep small spacing below */
+    line-height: 1.2;     /* tighter text */
+}
+
+/* ---------------- Form Row ---------------- */
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    min-width: 60px;
+    font-weight: bold;
+}
+
+.form-row input,
+.form-row select {
+    flex: 1;
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* ---------------- Material Cards ---------------- */
+#material-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 350px);
+    grid-gap: 5px;
+    justify-content: start;
+}
+
+.material-card {
+    width: 350px;
+    height: 350px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.material-card h3 {
+    font-size: 15px;
+    margin-top: 5px;        /* top & bottom spacing */
+    margin-bottom: 0px;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+    height: 40px;          /* optional, keeps cards uniform */
+    overflow: hidden;      /* hides overflow text */
+}
+
+.material-card .material-content {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.material-card .material-content img,
+.material-card .material-content video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.material-labels {
+    margin-top: 10px; /* adjust the value to your liking */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    font-size: 16px;
+}
+
+.material-labels .material-label {
+    padding: 4px 8px;
+    font-size: 16px;
+}
+
+.material-label {
+    display: inline-flex;
+    align-items: center;
+    background-color: #eef;
+    border-radius: 4px;
+    padding: 3px 6px;
+}
+
+.material-label button {
+    margin-left: 4px;
+    background-color: #f88;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media screen and (max-width: 900px) {
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #ccc;
+        max-height: none;
+        position: relative;
+        padding-left: 0;
+        margin-top: 20px;
+    }
+
+    .cards-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .add-label-card {
+        margin-left: 0; /* reset on small screens */
+        width: 100%;
+    }
+}
+
+.delete-x {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: #ff5c5c;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 24px;
+    text-align: center;
+    padding: 0;
+    transition: background 0.2s;
+}
+
+.delete-x:hover {
+    background: #e04848;
+}
+
+#labels-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px; /* space between labels */
+    margin-top:0px;
+    padding: 0;
+}
+
+#labels-container .material-label {
+    padding: 6px 10px;      /* space inside the label */
+    border-radius: 6px;
+    background-color: #eef;
+    display: inline-flex;
+    font-size: 14px;
+    margin: 0;              /* spacing handled by gap in parent */
+    cursor: pointer;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+#labels-container .material-label:hover {
+    background-color: #dde;
+}
+
+/* Labels in sidebar */
+.sidebar #labels-container {
+    display: flex;
+    flex-wrap: wrap;   /* wrap labels to new lines */
+    gap: 8px;          /* space between labels */
+    margin-top: 0px;
+}
+
+.sidebar #labels-container .material-label {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background-color: #eef;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sidebar #labels-container .material-label:hover {
+    background-color: #dde;
+}
+
+.tip-bullet {
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+#trash-container {
+    cursor: pointer;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+#trash-container.dragover {
+    color: white;
+    background-color: #ff4d4d;
+    border-radius: 3px;
+    padding: 0.1rem 0.3rem;
+}

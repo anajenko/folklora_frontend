@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Folklora APP</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="main-layout">
+    <!-- Materials + form -->
+    <div class="content">
+      <!--<h1>Folklorna skupina KLOBUK</h1>-->
+
+      <div class="cards-row">
+          <!-- Add Material Card -->
+          <div class="add-material-card">
+              <h2>Dodaj nov kos</h2>
+              <form id="add-material-form" enctype="multipart/form-data">
+                  <div class="form-row">
+                      <label for="ime">Naziv:</label>
+                      <input type="text" name="ime" placeholder="vnesi naziv kosa" required>
+                  </div>
+                  <div class="form-row">
+                      <label for="tip">Tip:</label>
+                      <select name="tip" id="tip" required>
+                          <option value="slika">Slika</option>
+                          <option value="audio">Audio</option>
+                          <option value="pdf">PDF</option>
+                          <option value="video">Video</option>
+                      </select>
+                  </div>
+                  <div class="form-row">
+                      <input type="file" name="slika" id="slika" accept="image/*,audio/*,video/*,application/pdf" required style="display:none">
+                      <label for="slika" class="custom-file-label">Izberi datoteko z naprave</label>
+                  </div>
+                  <button type="submit">Uvozi kos</button>
+              </form>
+          </div>
+
+          <!-- Add Label Card -->
+          <div class="add-label-card">
+              <h2>Dodaj labelo</h2>
+              <form id="add-label-form">
+                  <div class="form-row">
+                      <label for="naziv">Naziv:</label>
+                      <input type="text" name="naziv" placeholder="vnesi naziv labele" required>
+                  </div>
+                  <div class="form-row">
+                      <label for="tip">Tip:</label>
+                      <select name="tip" id="tip1" required>
+                          <option value="">--izberi--</option>
+                          <option value="pokrajina">Pokrajina</option>
+                          <option value="tip_oblacila">Tip oblačila</option>
+                          <option value="spol">Spol</option>
+                          <option value="velikost">Velikost</option>
+                          <option value="drugo">Drugo</option>
+                      </select>
+                  </div>
+                  <button type="submit">Dodaj</button>
+              </form>
+          </div>
+      </div>
+
+      <div id="material-container"></div>
+    </div>
+
+    <!-- Labels sidebar -->
+    <div class="sidebar">
+    <h2>
+        LABELE
+        <span id="trash-container">
+        <i class="fas fa-trash-alt"></i>
+        </span>
+    </h2>
+    <div id="labels-container"></div>
+    </div>
+  </main>
+    <%- include('partials/footer') %>
+
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/material.js"></script>
+    <script src="/javascripts/labels.js"></script>
+</body>
+</html>
