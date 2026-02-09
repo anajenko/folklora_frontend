@@ -78,8 +78,13 @@ document.addEventListener("DOMContentLoaded", () => {
     addLabelForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(addLabelForm);
+        const data = Object.fromEntries(formData.entries());
         try {
-            await fetchJSON('http://localhost:3000/api/labele/', { method: 'POST', body: formData });
+            await fetchJSON('http://localhost:3000/api/labele/', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data) 
+            });
             addLabelForm.reset();
             loadLabels();
         } catch (err) {

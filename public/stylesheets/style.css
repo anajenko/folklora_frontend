@@ -169,7 +169,7 @@ form button:hover {
 
 /* Add Label Card - half width, hugging sidebar */
 .add-label-card {
-    width: 250px;
+    width: 380px;
     height: fit-content;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -203,6 +203,19 @@ form button:hover {
     flex: 1;
     padding: 5px;
     font-size: 14px;
+}
+
+.radio-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem 1.0rem; /* row gap / column gap */
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
 }
 
 /* ---------------- Material Cards ---------------- */
@@ -316,29 +329,6 @@ form button:hover {
     }
 }
 
-.delete-x {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 24px;
-    height: 24px;
-    border: none;
-    border-radius: 50%;
-    background: #ff5c5c;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 24px;
-    text-align: center;
-    padding: 0;
-    transition: background 0.2s;
-}
-
-.delete-x:hover {
-    background: #e04848;
-}
-
 #labels-container {
     display: flex;
     flex-direction: column;
@@ -404,4 +394,22 @@ form button:hover {
     background-color: #ff4d4d;
     border-radius: 3px;
     padding: 0.1rem 0.3rem;
+}
+
+
+.delete-x {
+  background: none;    /* remove button background */
+  border: none;        /* remove border */
+  padding: 0;          /* remove extra space */
+  cursor: pointer;     /* pointer on hover */
+  position: absolute;  /* at top-right of card */
+  top: 6px;
+  right: 6px;
+}
+
+.delete-x img {
+  width: 26px;        /* adjust size */
+  height: 26px;
+  vertical-align: middle;
+  cursor: pointer;
 }

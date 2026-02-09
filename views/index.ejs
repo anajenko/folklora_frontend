@@ -26,12 +26,29 @@
                   </div>
                   <div class="form-row">
                       <label for="tip">Tip:</label>
-                      <select name="tip" id="tip" required>
+                      <!--<select name="tip" id="tip" required>
                           <option value="slika">Slika</option>
                           <option value="audio">Audio</option>
                           <option value="pdf">PDF</option>
                           <option value="video">Video</option>
-                      </select>
+                      </select>-->
+                      <label>
+                        <input type="radio" name="tip" value="slika" checked required>
+                        slika
+                      </label>
+                      <label>
+                        <input type="radio" name="tip" value="audio" required>
+                        audio
+                      </label>
+                      <label>
+                        <input type="radio" name="tip" value="video" required>
+                        video
+                      </label>
+                      </label>
+                      <label>
+                        <input type="radio" name="tip" value="pdf" required>
+                        pdf
+                      </label>
                   </div>
                   <div class="form-row">
                       <input type="file" name="slika" id="slika" accept="image/*,audio/*,video/*,application/pdf" required style="display:none">
@@ -50,15 +67,37 @@
                       <input type="text" name="naziv" placeholder="vnesi naziv labele" required>
                   </div>
                   <div class="form-row">
-                      <label for="tip">Tip:</label>
-                      <select name="tip" id="tip1" required>
+                      <label for="tip" class="form-label" name="tip">Tip:</label>
+                      <!--<select name="tip" id="tip1" required>
                           <option value="">--izberi--</option>
                           <option value="pokrajina">Pokrajina</option>
                           <option value="tip_oblacila">Tip oblačila</option>
                           <option value="spol">Spol</option>
                           <option value="velikost">Velikost</option>
                           <option value="drugo">Drugo</option>
-                      </select>
+                      </select>-->
+                      <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="tip" value="pokrajina" required>
+                            pokrajina
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="tip" value="tip_oblacila" required>
+                            tip oblačila
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="tip" value="spol" required>
+                            spol
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="tip" value="velikost" required>
+                            velikost
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="tip" value="drugo" required>
+                            drugo
+                        </label>
+                      </div>
                   </div>
                   <button type="submit">Dodaj</button>
               </form>

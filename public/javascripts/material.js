@@ -76,7 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <img src="http://localhost:3000/api/datoteke/${m.id}" alt="${m.ime}" draggable="false">
                 </div>
                 <div class="material-labels">${labelsHTML}</div>
-                <button data-id="${m.id}" class="delete-x">&times;</button>
+                <button data-id="${m.id}" class="delete-x">
+                    <img src="images/delete-icon.png" alt="Delete" />
+                </button>
             `;
 
             // Disable dragging the image
@@ -114,10 +116,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Delete material
     materialContainer.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("delete-x")) {
-            const id = e.target.dataset.id;
+        const button = e.target.closest(".delete-x");
+        if (!button) return;
+
+        const id = button.dataset.id;
+
+        const confirmed = confirm("Ali ste prepričani, da želite izbrisati kos?");
+        if (!confirmed) return;
+
+        try {
             await fetch(`http://localhost:3000/api/datoteke/${id}`, { method: 'DELETE' });
             loadMaterial();
+        } catch (err) {
+            alert("Napaka pri brisanju: " + err.message);
         }
     });
 
