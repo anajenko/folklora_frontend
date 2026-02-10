@@ -121,6 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const id = button.dataset.id;
 
+        //preverim, če ima kos že prirejene labele
+        const materialCard = button.closest('.material-card');
+        const materialLabels = materialCard.querySelectorAll('.material-label');
+        if (materialLabels.length > 0) {
+            alert("Ta kos ima že prirejene labele!");
+        }
+
         const confirmed = confirm("Ali ste prepričani, da želite izbrisati kos?");
         if (!confirmed) return;
 
@@ -128,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await fetch(`http://localhost:3000/api/datoteke/${id}`, { method: 'DELETE' });
             loadMaterial();
         } catch (err) {
-            alert("Napaka pri brisanju: " + err.message);
+            alert("Napaka pri brisanju datoteke: " + err.message);
         }
     });
 

@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #f7e9e9;
     color: #333;
 }
 
@@ -113,7 +113,7 @@ form button {
 
 form button {
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #b05055;
     color: white;
     border: none;
     border-radius: 4px;
@@ -121,14 +121,14 @@ form button {
 }
 
 form button:hover {
-    background-color: #45a049;
+   background-color: #8f3c41;
 }
 
 /* ---------------- File Input ---------------- */
 .custom-file-label {
     display: inline-block;
     padding: 6px 12px;
-    background-color: #eee;
+    background-color: #f3f3f3;
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
@@ -207,15 +207,23 @@ form button:hover {
 
 .radio-group {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.7rem 1.0rem; /* row gap / column gap */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 6px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .radio-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 16px auto; /* radio | text */
   align-items: center;
-  gap: 0.4rem;
-  white-space: nowrap;
+  column-gap: 5px;
+  font-size: 15px;
+}
+
+.radio-item input[type="radio"] {
+  transform: scale(1.0);
+  margin: 0;
 }
 
 /* ---------------- Material Cards ---------------- */
@@ -287,19 +295,10 @@ form button:hover {
 .material-label {
     display: inline-flex;
     align-items: center;
-    background-color: #eef;
-    border-radius: 4px;
+    background-color:#fd838997;
+    border-radius: 6px;
     padding: 3px 6px;
-}
-
-.material-label button {
-    margin-left: 4px;
-    background-color: #f88;
-    border: none;
-    border-radius: 3px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 /* ---------------- Responsive ---------------- */
@@ -311,11 +310,11 @@ form button:hover {
     .sidebar {
         width: 100%;
         border-left: none;
-        border-top: 1px solid #ccc;
+        border-top: none;
         max-height: none;
         position: relative;
         padding-left: 0;
-        margin-top: 20px;
+        margin-top: 17px;
     }
 
     .cards-row {
@@ -334,24 +333,14 @@ form button:hover {
     flex-direction: column;
     flex-wrap: wrap;
     gap: 8px; /* space between labels */
-    margin-top:0px;
+    margin-top: 0px;
     padding: 0;
 }
 
 #labels-container .material-label {
-    padding: 6px 10px;      /* space inside the label */
-    border-radius: 6px;
-    background-color: #eef;
-    display: inline-flex;
-    font-size: 14px;
-    margin: 0;              /* spacing handled by gap in parent */
+    margin: 2px 2px;
     cursor: pointer;
-    align-items: center;
     transition: background 0.2s;
-}
-
-#labels-container .material-label:hover {
-    background-color: #dde;
 }
 
 /* Labels in sidebar */
@@ -365,15 +354,11 @@ form button:hover {
 .sidebar #labels-container .material-label {
     display: inline-flex;
     padding: 6px 10px;
-    border-radius: 6px;
-    background-color: #eef;
+    background-color: #ddd;
     font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
 }
-
-.sidebar #labels-container .material-label:hover {
-    background-color: #dde;
+.sidebar #labels-container .material-label:hover{
+    background-color: #fd838997;
 }
 
 .tip-bullet {
@@ -383,7 +368,7 @@ form button:hover {
 
 #trash-container {
     cursor: pointer;
-    color: #ff4d4d;
+    color: #b05055;
     font-size: 1.2rem;
     display: flex;
     align-items: center;
