@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // DELETE request to remove label from material
-            const res = await fetch(`http://localhost:3000/api/datoteke/${materialId}/labele/${labelId}`, { method: 'DELETE' });
+            const res = await fetch(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: 'DELETE' });
             if (!res.ok) throw new Error('Napaka pri odstranjevanju labele iz kosa.');
 
             // Remove label from UI
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!labelId || !materialId) return;
 
                 try {
-                    await fetch(`http://localhost:3000/api/datoteke/${materialId}/labele/${labelId}`, { method: "POST" });
+                    await fetch(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: "POST" });
 
                     const labelsDiv = card.querySelector('.material-labels');
 

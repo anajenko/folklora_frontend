@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fileInput.addEventListener('change', () => {
         fileLabel.textContent = fileInput.files.length
             ? fileInput.files[0].name
-            : 'Izberi datoteko z naprave';
+            : 'Izberi .jpg ali .jpeg datoteko z naprave';
     });
 
     // --- DRAG & DROP HANDLER ---
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadMaterial() {
-        const materials = await fetchJSON('http://localhost:3000/api/datoteke/');
+        const materials = await fetchJSON('http://localhost:3000/api/kosi/');
 
         // Clear container ONCE
         materialContainer.innerHTML = '';
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await Promise.all(
             materials.map(async (m) => {
                 try {
-                    labelsMap[m.id] = await fetchJSON(`http://localhost:3000/api/labele/datoteka/${m.id}`);
+                    labelsMap[m.id] = await fetchJSON(`http://localhost:3000/api/labele/kos/${m.id}`);
                 } catch (err) {
                     labelsMap[m.id] = [];
                     console.error("Napaka pri nalaganju label:", err);
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             div.innerHTML = `
                 <h3>${m.ime}</h3>
                 <div class="material-content">
-                    <img src="http://localhost:3000/api/datoteke/${m.id}" alt="${m.ime}" draggable="false">
+                    <img src="http://localhost:3000/api/kosi/${m.id}" alt="${m.ime}" draggable="false">
                 </div>
                 <div class="material-labels">${labelsHTML}</div>
                 <button data-id="${m.id}" class="delete-x">
@@ -101,13 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(addForm);
 
         try {
-            const res = await fetch('http://localhost:3000/api/datoteke/', { method: 'POST', body: formData });
+            const res = await fetch('http://localhost:3000/api/kosi/', { method: 'POST', body: formData });
             const data = await res.json();
             if (!res.ok) throw new Error(data.message);
 
             alert(data.message);
             addForm.reset();
-            fileLabel.textContent = 'Izberi datoteko z naprave';
+            if (fileLabel) fileLabel.textContent = 'Izberi .jpg ali .jpeg datoteko z naprave';
             loadMaterial();
         } catch (err) {
             alert('Napaka: ' + err.message);
@@ -125,17 +125,41 @@ document.addEventListener("DOMContentLoaded", () => {
         const materialCard = button.closest('.material-card');
         const materialLabels = materialCard.querySelectorAll('.material-label');
         if (materialLabels.length > 0) {
-            alert("Ta kos ima že prirejene labele!");
+            alert("Kos ima dodane labele!");
         }
 
-        const confirmed = confirm("Ali ste prepričani, da želite izbrisati kos?");
+        /*const confirmed = confirm("Ali ste prepričani, da želite izbrisati kos?");
         if (!confirmed) return;
 
         try {
-            await fetch(`http://localhost:3000/api/datoteke/${id}`, { method: 'DELETE' });
+            await fetch(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE' });
             loadMaterial();
         } catch (err) {
-            alert("Napaka pri brisanju datoteke: " + err.message);
+            alert("Napaka pri brisanju kosa: " + err.message);
+        }*/
+       // Preverimo, če obstajajo komentarji za kos
+        try {
+            const res = await fetch(`http://localhost:3000/api/komentarji/kos/${id}`);
+            const komentarji = await res.json();
+
+            let confirmedMessage = "Ali ste prepričani, da želite izbrisati kos?";
+
+            if (komentarji.length > 0) {
+                confirmedMessage = 
+                    "Ta kos ima komentarje.\n" +
+                    "Če nadaljujete, bodo vsi komentarji trajno izbrisani.\n" +
+                    "Ali ste prepričani, da želite izbrisati kos?";
+            }
+
+            const confirmed = confirm(confirmedMessage);
+            if (!confirmed) return;
+
+            // Če je potrjeno, izbrišemo kos
+            await fetch(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE' });
+            loadMaterial();
+
+        } catch (err) {
+            alert("Napaka pri brisanju kosa: " + err.message);
         }
     });
 
