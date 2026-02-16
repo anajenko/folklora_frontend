@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Folklora APP</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="auth-container">
+    <h2>Registracija</h2>
+    <form id="register-form">
+        <label for="uporabnisko_ime">Uporabniško ime</label>
+        <input type="text" id="uporabnisko_ime" name="uporabnisko_ime" required>
+
+        <label for="geslo">Geslo</label>
+        <input type="password" id="geslo" name="geslo" required>
+
+        <label for="tip_uporabnika">Izberite svojo vlogo</label>
+        <!--<select id="tip_uporabnika" name="tip_uporabnika" required>
+        <option value="garderober">Garderober/-ka</option>
+        <option value="plesalec">Plesalec/-ka</option>
+        <option value="glasbenik">Glasbenik/-ca</option>
+        </select>-->
+        <fieldset id="tip-uporabnika" class="radio-group">
+            <label>
+                <input type="radio" name="tip_uporabnika" value="garderober/-ka" required>
+                Garderober/-ka
+            </label>
+            <label>
+                <input type="radio" name="tip_uporabnika" value="plesalec/-ka">
+                Plesalec/-ka
+            </label>
+            <label>
+                <input type="radio" name="tip_uporabnika" value="glasbenik/-ca">
+                Glasbenik/-ca
+            </label>
+        </fieldset>
+
+        <button type="submit">Registriraj se</button>
+    </form>
+    <p>Če že imate svoj račun, se v aplikacijo prijavite <a href="/prijava">tukaj</a>.</p>
+    </div>
+
+    <%- include('partials/footer') %>
+    <script src="/javascripts/auth.js"></script>
+</body>
+</html>

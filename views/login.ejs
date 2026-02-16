@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Folklora APP</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="auth-container">
+    <h2>Prijava</h2>
+    <form id="login-form">
+        <label for="uporabnisko_ime">Uporabniško ime</label>
+        <input type="text" id="uporabnisko_ime" name="uporabnisko_ime" required>
+
+        <label for="geslo">Geslo</label>
+        <input type="password" id="geslo" name="geslo" required>
+
+        <button type="submit">Prijava</button>
+    </form>
+    <p>Če še nimate svojega računa, se morate pred prijavo najprej <a href="/registracija">registrirati</a>.</p>
+    </div>
+
+    <%- include('partials/footer') %>
+    <script src="/javascripts/auth.js"></script>
+</body>
+</html>

@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let observer; // MutationObserver to attach drop listeners
 
-    // --- Helper: fetch JSON with error handling ---
+    /*// --- Helper: fetch JSON with error handling ---
     async function fetchJSON(url, options = {}) {
         const res = await fetch(url, options);
         if (!res.ok) throw new Error((await res.json()).message || res.statusText);
         return res.json();
-    }
+    }*/
 
     // --- Load labels into sidebar ---
     async function loadLabels() {
@@ -110,8 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // DELETE request to remove label from material
-            const res = await fetch(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error('Napaka pri odstranjevanju labele iz kosa.');
+            const res = await fetchJSON(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: 'DELETE', skipJson: true });
 
             // Remove label from UI
             labelSpan.remove();
@@ -146,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!labelId || !materialId) return;
 
                 try {
-                    await fetch(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: "POST" });
+                    await fetchJSON(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: "POST" });
 
                     const labelsDiv = card.querySelector('.material-labels');
 
@@ -198,9 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // DELETE label from database
-            const res = await fetch(`http://localhost:3000/api/labele/${labelId}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error('Napaka pri brisanju labele.');
-
+            const res = await fetchJSON(`http://localhost:3000/api/labele/${labelId}`, { method: 'DELETE', skipJson: true });
+        
             // Reload labels
             loadLabels();
             alert('Labela je bila uspešno izbrisana!');

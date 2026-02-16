@@ -308,7 +308,6 @@ form button:hover {
     width: 22px;
     height: 22px;
     padding: 4px;
-   
 }
 
 /* ---------------- Responsive ---------------- */
@@ -407,4 +406,80 @@ form button:hover {
   height: 26px;
   vertical-align: middle;
   cursor: pointer;
+}
+
+/*auth*/
+.auth-container {
+  max-width: 550px;
+  margin: 60px auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 150px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-container form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="password"],
+.auth-container form select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.auth-container form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #b05055;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+.auth-container form button:hover {
+  background-color: #8f3c41;
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 15px;
+}
+
+.auth-container a {
+  color: #0077cc;
+}
+
+/* Radio buttons container */
+#tip-uporabnika {
+  margin-bottom: 15px;
+  border: none;
+  padding: 0;
+}
+
+#tip-uporabnika  label {
+  display: block; /* stack vertically */
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+#tip-uporabnika input[type="radio"] {
+  margin-right: 8px;
 }

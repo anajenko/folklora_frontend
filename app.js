@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
   // Render views/index.ejs
   res.render('index');
 });
+app.get('/prijava', (req, res) => res.render('login'));
+app.get('/registracija', (req, res) => res.render('register'));
 
 app.listen(PORT, () => {
   console.log(`Frontend running on http://localhost:${PORT}`);

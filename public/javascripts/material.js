@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Optionally: send to backend to save the label on this material
-        fetch(`http://localhost:3000/api/labele/dodaj/${materialCard.dataset.id}/${labelId}`, { method: 'POST' });
+        fetchJSON(`http://localhost:3000/api/labele/dodaj/${materialCard.dataset.id}/${labelId}`, { method: 'POST' });
     }
 
     async function loadMaterial() {
@@ -82,9 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
 
             try {
-                const resKomentarji = await fetch(`http://localhost:3000/api/komentarji/kos/${m.id}`);
-                const komentarji = await resKomentarji.json();
-                
+                const komentarji = await fetchJSON(`http://localhost:3000/api/komentarji/kos/${m.id}`);
                 if (komentarji.length > 0) {
                     const icon = document.createElement("img");
                     icon.src = "/images/comment.png";
@@ -117,10 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(addForm);
 
         try {
-            const res = await fetch('http://localhost:3000/api/kosi/', { method: 'POST', body: formData });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message);
-
+            const data = await fetchJSON('http://localhost:3000/api/kosi/', { method: 'POST', body: formData, skipJsonHeader: true });
+            
             alert(data.message);
             addForm.reset();
             if (fileLabel) fileLabel.textContent = 'Izberi .jpg ali .jpeg datoteko z naprave';
@@ -143,8 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // preverimo komentarje
-            const res = await fetch(`http://localhost:3000/api/komentarji/kos/${id}`);
-            const komentarji = await res.json();
+            const komentarji = await fetchJSON(`http://localhost:3000/api/komentarji/kos/${id}`);
             const hasComments = komentarji.length > 0;
 
             // sestavimo sporočilo
@@ -161,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!confirmed) return;
 
             // Če je potrjeno, izbrišemo kos
-            await fetch(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE' });
+            await fetchJSON(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE', skipJson: true });
             loadMaterial();
 
         } catch (err) {
