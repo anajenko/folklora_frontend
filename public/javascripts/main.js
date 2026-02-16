@@ -47,10 +47,44 @@ async function fetchJSON(url, options = {}) {
     }
 
     if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || `HTTP ${response.status}`);
+        let errorMessage = `HTTP ${response.status}`;
+
+        try {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorMessage;
+        } catch {
+            // fallback if not JSON
+        }
+
+        throw new Error(errorMessage);
     }
 
     if (options.skipJson) return response; // just return the raw response
     return response.json();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const username = localStorage.getItem('username');
+    const currentUserEl = document.getElementById('current-user');
+    const labelEl = currentUserEl.querySelector('.label');
+    const usernameEl = currentUserEl.querySelector('.username');
+    const logoutBtn = document.getElementById('logout-icon');
+
+    if (username) {
+        labelEl.textContent = 'Prijavljeni uporabnik:';
+        usernameEl.textContent = username;
+        logoutBtn.style.display = 'inline-block';
+    } else {
+        labelEl.textContent = '';
+        usernameEl.textContent = '';
+        logoutBtn.style.display = 'none';
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            window.location.href = '/prijava';
+        });
+    }
+});

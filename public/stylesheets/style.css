@@ -483,3 +483,74 @@ form button:hover {
 #tip-uporabnika input[type="radio"] {
   margin-right: 8px;
 }
+
+/* Header navigation */
+.header-nav {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 0;
+    position: absolute;
+    right: 20px;     /* distance from right edge */
+    top: 5px;
+}
+
+#current-user {
+    display: flex;
+    flex-direction: column; /* stack label and username */
+    align-items: flex-end;
+    font-size: 14px;
+}
+
+#current-user .label {
+    font-weight: bold;
+}
+
+#current-user .username {
+    font-size: 16px;
+    color: #fff;
+}
+
+#logout-btn {
+    display: none; /* show only when logged in */
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    align-items: center;
+}
+
+header nav li {
+    display: flex;
+    align-items: center;
+}
+
+#logout-icon {
+    display:none; 
+    cursor:pointer; 
+    width:24px; 
+    height:24px;
+    vertical-align: middle;
+}
+
+#current-user .label,
+#current-user .username {
+    font-size: 0.95rem;   /* same size for both */
+    font-family: inherit; /* same font as header */
+}
+
+#current-user .label {
+    font-weight: normal;  /* not bold */
+}
+
+#current-user .username {
+    font-weight: bold;    /* bold only username */
+}

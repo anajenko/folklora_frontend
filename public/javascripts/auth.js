@@ -61,7 +61,6 @@ if (loginForm) {
         // Shrani JWT v localStorage
         localStorage.setItem('token', json.token);
         localStorage.setItem('username', json.uporabnisko_ime);
-        alert('Prijava uspešna!');
         window.location.href = '/'; // index page
       } else {
         alert(json.message || 'Napaka pri prijavi!');
