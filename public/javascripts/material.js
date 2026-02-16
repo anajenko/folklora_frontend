@@ -81,6 +81,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 </button>
             `;
 
+            try {
+                const resKomentarji = await fetch(`http://localhost:3000/api/komentarji/kos/${m.id}`);
+                const komentarji = await resKomentarji.json();
+                
+                if (komentarji.length > 0) {
+                    const icon = document.createElement("img");
+                    icon.src = "/images/comment.png";
+                    icon.alt = "Komentarji";
+                    icon.title = "Kos ima komentarje";
+                    icon.classList.add("comment-icon");
+                    div.appendChild(icon);
+                }
+            } catch (err) {
+                console.error("Napaka pri preverjanju komentarjev:", err);
+            }
+
             // Disable dragging the image
             div.querySelector('img').addEventListener('dragstart', e => e.preventDefault());
 
@@ -121,34 +137,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const id = button.dataset.id;
 
-        //preverim, če ima kos že prirejene labele
         const materialCard = button.closest('.material-card');
         const materialLabels = materialCard.querySelectorAll('.material-label');
-        if (materialLabels.length > 0) {
-            alert("Kos ima dodane labele!");
-        }
-
-        /*const confirmed = confirm("Ali ste prepričani, da želite izbrisati kos?");
-        if (!confirmed) return;
+        const hasLabels = materialLabels.length > 0;
 
         try {
-            await fetch(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE' });
-            loadMaterial();
-        } catch (err) {
-            alert("Napaka pri brisanju kosa: " + err.message);
-        }*/
-       // Preverimo, če obstajajo komentarji za kos
-        try {
+            // preverimo komentarje
             const res = await fetch(`http://localhost:3000/api/komentarji/kos/${id}`);
             const komentarji = await res.json();
+            const hasComments = komentarji.length > 0;
 
+            // sestavimo sporočilo
             let confirmedMessage = "Ali ste prepričani, da želite izbrisati kos?";
 
-            if (komentarji.length > 0) {
+            if (hasLabels || hasComments) {
                 confirmedMessage = 
-                    "Ta kos ima komentarje.\n" +
-                    "Če nadaljujete, bodo vsi komentarji trajno izbrisani.\n" +
-                    "Ali ste prepričani, da želite izbrisati kos?";
+                    "Kos ima dodane komentarje ali labele.\n\n" +
+                    "V primeru, da izbrišete kos, se bodo izbrisali tudi vsi komentarji oz. povezave z labelami.\n" +
+                    "Ali želite vseeno nadaljevati z brisanjem kosa?";
             }
 
             const confirmed = confirm(confirmedMessage);

@@ -301,6 +301,16 @@ form button:hover {
     font-size: 12px;
 }
 
+.comment-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 22px;
+    height: 22px;
+    padding: 4px;
+   
+}
+
 /* ---------------- Responsive ---------------- */
 @media screen and (max-width: 900px) {
     .main-layout {
