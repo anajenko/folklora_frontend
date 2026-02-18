@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <title>Folklora APP</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <%- include('partials/header') %>
 
   <main class="main-layout">
-    <!-- Materials + form -->
     <div class="content">
-      <!--<h1>Folklorna skupina KLOBUK</h1>-->
-
       <div class="cards-row">
-          <!-- Add Material Card -->
+          <!-- kartica za dodajanje kosa -->
           <div class="add-material-card">
               <h2>Dodaj nov kos</h2>
               <form id="add-material-form" enctype="multipart/form-data">
@@ -26,29 +22,10 @@
                   </div>
                   <div class="form-row">
                       <label for="tip">Tip:</label>
-                      <!--<select name="tip" id="tip" required>
-                          <option value="slika">Slika</option>
-                          <option value="audio">Audio</option>
-                          <option value="pdf">PDF</option>
-                          <option value="video">Video</option>
-                      </select>-->
-                      <label>
-                        <input type="radio" name="tip" value="slika" checked required>
-                        slika
-                      </label>
-                      <label>
-                        <input type="radio" name="tip" value="audio" disabled>
-                        audio
-                      </label>
-                      <label>
-                        <input type="radio" name="tip" value="video" disabled>
-                        video
-                      </label>
-                      </label>
-                      <label>
-                        <input type="radio" name="tip" value="pdf" disabled>
-                        pdf
-                      </label>
+                      <label><input type="radio" name="tip" value="slika" checked required>slika</label>
+                      <label><input type="radio" name="tip" value="audio" disabled>audio</label>
+                      <label><input type="radio" name="tip" value="video" disabled>video</label>
+                      <label><input type="radio" name="tip" value="pdf" disabled>pdf</label>
                   </div>
                   <div class="form-row">
                       <input type="file" name="slika" id="slika" accept=".jpg,.jpeg">
@@ -58,7 +35,7 @@
               </form>
           </div>
 
-          <!-- Add Label Card -->
+          <!-- kartica za dodajanje label -->
           <div class="add-label-card">
               <h2>Dodaj labelo</h2>
               <form id="add-label-form">
@@ -68,35 +45,12 @@
                   </div>
                   <div class="form-row">
                       <label for="tip" class="form-label" name="tip">Tip:</label>
-                      <!--<select name="tip" id="tip1" required>
-                          <option value="">--izberi--</option>
-                          <option value="pokrajina">Pokrajina</option>
-                          <option value="tip_oblacila">Tip oblačila</option>
-                          <option value="spol">Spol</option>
-                          <option value="velikost">Velikost</option>
-                          <option value="drugo">Drugo</option>
-                      </select>-->
                       <div class="radio-group">
-                        <label class="radio-item">
-                            <input type="radio" name="tip" value="pokrajina" required>
-                            pokrajina
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tip" value="tip_oblacila" required>
-                            tip oblačila
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tip" value="spol" required>
-                            spol
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tip" value="velikost" required>
-                            velikost
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tip" value="drugo" required>
-                            drugo
-                        </label>
+                        <label class="radio-item"><input type="radio" name="tip" value="pokrajina" required>pokrajina</label>
+                        <label class="radio-item"><input type="radio" name="tip" value="tip_oblacila" required>tip oblačila</label>
+                        <label class="radio-item"><input type="radio" name="tip" value="spol" required>spol</label>
+                        <label class="radio-item"><input type="radio" name="tip" value="velikost" required>velikost</label>
+                        <label class="radio-item"><input type="radio" name="tip" value="drugo" required>drugo</label>
                       </div>
                   </div>
                   <button type="submit">Dodaj</button>
@@ -107,13 +61,12 @@
       <div id="material-container"></div>
     </div>
 
-    <!-- Labels sidebar -->
+    <!-- sidebar -->
     <div class="sidebar">
     <h2>
         LABELE
         <span id="trash-container">
         <i class="fas fa-trash-alt" title="Povleci labelo v smetnjak"></i>
-        
         </span>
     </h2>
     <div id="labels-container"></div>

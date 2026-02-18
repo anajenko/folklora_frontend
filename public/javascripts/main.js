@@ -1,27 +1,5 @@
-/*async function fetchJSON(url, options = {}) {
-    const res = await fetch(url, options);
-    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-    return res.json();
-}*/
-
-/*async function fetchJSON(url) {
-    const token = localStorage.getItem('token');
-
-    const response = await fetch(url, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-
-    if (!response.ok) {
-        throw new Error(`HTTP error ${response.status}`);
-    }
-
-    return response.json();
-}*/
-
 async function fetchJSON(url, options = {}) {
-    const token = localStorage.getItem('token');
+    const zeton = localStorage.getItem('token');
 
     // Only add 'Content-Type: application/json' if not sending FormData
     const headers = {
@@ -29,8 +7,8 @@ async function fetchJSON(url, options = {}) {
         ...(options.headers || {})
     };
 
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+    if (zeton) {
+        headers['Authorization'] = `Bearer ${zeton}`;
     }
 
     const response = await fetch(url, {
@@ -64,24 +42,24 @@ async function fetchJSON(url, options = {}) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const username = localStorage.getItem('username');
-    const currentUserEl = document.getElementById('current-user');
-    const labelEl = currentUserEl.querySelector('.label');
-    const usernameEl = currentUserEl.querySelector('.username');
-    const logoutBtn = document.getElementById('logout-icon');
+    const up_ime = localStorage.getItem('username');
+    const uporabnikEl = document.getElementById('current-user');
+    const labelaEl = uporabnikEl.querySelector('.label');
+    const up_imeEl = uporabnikEl.querySelector('.username');
+    const odjavaGumb = document.getElementById('logout-icon');
 
-    if (username) {
-        labelEl.textContent = 'Prijavljeni uporabnik:';
-        usernameEl.textContent = username;
-        logoutBtn.style.display = 'inline-block';
+    if (up_ime) {
+        labelaEl.textContent = 'Prijavljeni uporabnik:';
+        up_imeEl.textContent = up_ime;
+        odjavaGumb.style.display = 'inline-block';
     } else {
-        labelEl.textContent = '';
-        usernameEl.textContent = '';
-        logoutBtn.style.display = 'none';
+        labelaEl.textContent = '';
+        up_imeEl.textContent = '';
+        odjavaGumb.style.display = 'none';
     }
 
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
+    if (odjavaGumb) {
+        odjavaGumb.addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             window.location.href = '/prijava';

@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const materialContainer = document.getElementById("material-container");
-    const addForm = document.getElementById("add-material-form");
+    const kontejner_kosi = document.getElementById("material-container");
+    const forma_kosi = document.getElementById("add-material-form");
 
     // --- FILE INPUT LISTENER ---
-    const fileInput = document.getElementById('slika');
-    const fileLabel = document.querySelector('.custom-file-label');
+    const datotekaInput = document.getElementById('slika');
+    const datotekaLabel = document.querySelector('.custom-file-label');
 
-    fileInput.addEventListener('change', () => {
-        fileLabel.textContent = fileInput.files.length
-            ? fileInput.files[0].name
+    datotekaInput.addEventListener('change', () => {
+        datotekaLabel.textContent = datotekaInput.files.length
+            ? datotekaInput.files[0].name
             : 'Izberi .jpg ali .jpeg datoteko z naprave';
     });
 
@@ -16,58 +16,58 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleLabelDrop(e, materialCard) {
         e.preventDefault();
 
-        const labelId = e.dataTransfer.getData('text/plain'); // the label id
-        const labelName = e.dataTransfer.getData('label-name'); // the label name
+        const labelaId = e.dataTransfer.getData('text/plain'); // the label id
+        const labelaNaziv = e.dataTransfer.getData('label-name'); // the label name
 
-        if (!labelId || !labelName) return;
+        if (!labelaId || !labelaNaziv) return;
 
         // Append label to material card visually
-        const labelsContainer = materialCard.querySelector('.material-labels');
-        if (labelsContainer) {
+        const kontejner_labele = materialCard.querySelector('.material-labels');
+        if (kontejner_labele) {
             // Prevent duplicate labels
-            const existing = Array.from(labelsContainer.children).some(span => span.textContent === labelName);
-            if (!existing) {
-                const span = document.createElement('span');
-                span.classList.add('material-label');
-                span.textContent = labelName;
-                labelsContainer.appendChild(span);
+            const obstojeci = Array.from(kontejner_labele.children).some(span => span.textContent === labelaNaziv);
+            if (!obstojeci) {
+                const znacka = document.createElement('span');
+                znacka.classList.add('material-label');
+                znacka.textContent = labelaNaziv;
+                kontejner_labele.appendChild(znacka);
             }
         }
 
         // Optionally: send to backend to save the label on this material
-        fetchJSON(`http://localhost:3000/api/labele/dodaj/${materialCard.dataset.id}/${labelId}`, { method: 'POST' });
+        fetchJSON(`http://localhost:3000/api/labele/dodaj/${materialCard.dataset.id}/${labelaId}`, { method: 'POST' });
     }
 
-    async function loadMaterial() {
-        const materials = await fetchJSON('http://localhost:3000/api/kosi/');
+    async function naloziKartice() {
+        const kosi = await fetchJSON('http://localhost:3000/api/kosi/');
 
         // Clear container ONCE
-        materialContainer.innerHTML = '';
+        kontejner_kosi.innerHTML = '';
 
         // Create fragment (fast, no glitch)
         const frag = document.createDocumentFragment();
 
         // Pre-fetch all labels for all materials
-        const labelsMap = {};
+        const mapiraneLabele = {};
         await Promise.all(
-            materials.map(async (m) => {
+            kosi.map(async (m) => {
                 try {
-                    labelsMap[m.id] = await fetchJSON(`http://localhost:3000/api/labele/kos/${m.id}`);
+                    mapiraneLabele[m.id] = await fetchJSON(`http://localhost:3000/api/labele/kos/${m.id}`);
                 } catch (err) {
-                    labelsMap[m.id] = [];
+                    mapiraneLabele[m.id] = [];
                     console.error("Napaka pri nalaganju label:", err);
                 }
             })
         );
 
         // Build all cards in memory (no DOM writes yet)
-        for (const m of materials) {
+        for (const m of kosi) {
             const div = document.createElement('div');
             div.classList.add('material-card');
             div.dataset.id = m.id;
             div.dataset.ime = m.ime;
 
-            const labelsHTML = (labelsMap[m.id] || [])
+            const labelsHTML = (mapiraneLabele[m.id] || [])
                 .map(l => `<span class="material-label" data-id="${l.id}">${l.naziv}</span>`)
                 .join(' ');
 
@@ -108,70 +108,70 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Add everything to the DOM AT ONCE → no glitch
-        materialContainer.appendChild(frag);
+        kontejner_kosi.appendChild(frag);
     }
 
-    addForm.addEventListener("submit", async (e) => {
+    forma_kosi.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         // Preverimo, ali je izbrana datoteka
-        const fileInput = addForm.querySelector('input[type="file"]');
+        const fileInput = forma_kosi.querySelector('input[type="file"]');
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
             alert('Za uvoz kosa je potrebno izbrati datoteko z naprave.');
             return; // ustavi submit
         }
         
-        const formData = new FormData(addForm);
+        const formData = new FormData(forma_kosi);
 
         try {
             const data = await fetchJSON('http://localhost:3000/api/kosi/', { method: 'POST', body: formData, skipJsonHeader: true });
             
             alert(data.message);
-            addForm.reset();
-            if (fileLabel) fileLabel.textContent = 'Izberi .jpg ali .jpeg datoteko z naprave';
-            loadMaterial();
+            forma_kosi.reset();
+            if (datotekaLabel) datotekaLabel.textContent = 'Izberi .jpg ali .jpeg datoteko z naprave';
+            naloziKartice();
         } catch (err) {
             alert(err.message);
         }
     });
 
     // Delete material
-    materialContainer.addEventListener("click", async (e) => {
-        const button = e.target.closest(".delete-x");
-        if (!button) return;
+    kontejner_kosi.addEventListener("click", async (e) => {
+        const gumb = e.target.closest(".delete-x");
+        if (!gumb) return;
 
-        const id = button.dataset.id;
+        const id = gumb.dataset.id;
 
-        const materialCard = button.closest('.material-card');
-        const materialLabels = materialCard.querySelectorAll('.material-label');
-        const hasLabels = materialLabels.length > 0;
+        const kartica = gumb.closest('.material-card');
+        const karticaLabele = kartica.querySelectorAll('.material-label');
+        const imaLabele = karticaLabele.length > 0;
 
         try {
             // preverimo komentarje
             const komentarji = await fetchJSON(`http://localhost:3000/api/komentarji/kos/${id}`);
-            const hasComments = komentarji.length > 0;
+            const imaKomentarje = komentarji.length > 0;
 
             // sestavimo sporočilo
-            let confirmedMessage = "Ali ste prepričani, da želite izbrisati kos?";
+            let potrdi = "Ali ste prepričani, da želite izbrisati kos?";
 
-            if (hasLabels || hasComments) {
-                confirmedMessage = 
+            if (imaLabele || imaKomentarje) {
+                potrdi = 
                     "Kos ima dodane komentarje ali labele.\n\n" +
                     "V primeru, da izbrišete kos, se bodo izbrisali tudi vsi komentarji oz. povezave z labelami.\n" +
                     "Ali želite vseeno nadaljevati z brisanjem kosa?";
             }
 
-            const confirmed = confirm(confirmedMessage);
+            const confirmed = confirm(potrdi);
             if (!confirmed) return;
 
             // Če je potrjeno, izbrišemo kos
             await fetchJSON(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE', skipJson: true });
-            loadMaterial();
+            naloziKartice();
 
         } catch (err) {
             alert(err.message);
         }
     });
 
-    loadMaterial();
+    naloziKartice();
 });

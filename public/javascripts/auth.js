@@ -1,7 +1,7 @@
 // Register form
-const registerForm = document.getElementById('register-form');
-if (registerForm) {
-  registerForm.addEventListener('submit', async e => {
+const forma_reg = document.getElementById('register-form');
+if (forma_reg) {
+  forma_reg.addEventListener('submit', async e => {
     e.preventDefault();
 
     const tipUporabnika = e.target.querySelector('input[name="tip_uporabnika"]:checked');
@@ -39,9 +39,9 @@ if (registerForm) {
 }
 
 // Login form
-const loginForm = document.getElementById('login-form');
-if (loginForm) {
-  loginForm.addEventListener('submit', async e => {
+const forma_login = document.getElementById('login-form');
+if (forma_login) {
+  forma_login.addEventListener('submit', async e => {
     e.preventDefault();
     
     const data = {
