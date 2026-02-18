@@ -42,27 +42,39 @@ async function fetchJSON(url, options = {}) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const up_ime = localStorage.getItem('username');
+    
     const uporabnikEl = document.getElementById('current-user');
-    const labelaEl = uporabnikEl.querySelector('.label');
-    const up_imeEl = uporabnikEl.querySelector('.username');
+    const labelaEl = uporabnikEl?.querySelector('.label');
+    const up_imeEl = uporabnikEl?.querySelector('.username');
     const odjavaGumb = document.getElementById('logout-icon');
 
-    if (up_ime) {
-        labelaEl.textContent = 'Prijavljeni uporabnik:';
-        up_imeEl.textContent = up_ime;
-        odjavaGumb.style.display = 'inline-block';
-    } else {
-        labelaEl.textContent = '';
-        up_imeEl.textContent = '';
-        odjavaGumb.style.display = 'none';
+    const currentPath = window.location.pathname;
+
+    if (currentPath === '/prijava' || currentPath === '/registracija') {
+        if (uporabnikEl) uporabnikEl.style.display = 'none';
+        if (odjavaGumb) odjavaGumb.style.display = 'none';
+        return; // ne izvajamo ostale logike za header
     }
 
-    if (odjavaGumb) {
-        odjavaGumb.addEventListener('click', () => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            window.location.href = '/prijava';
-        });
+    const up_ime = localStorage.getItem('username');
+    const zeton = localStorage.getItem('token');
+    
+    if (!zeton || !up_ime) {
+        // Če ni prijavljenega uporabnika ali tokena, skrij elemente
+        if (uporabnikEl) uporabnikEl.style.display = 'none';
+        if (odjavaGumb) odjavaGumb.style.display = 'none';
+        return;
     }
+
+    // Prikaz uporabnika
+    if (labelaEl) labelaEl.textContent = 'Prijavljeni uporabnik:'; // ali ostane prazno
+    if (up_imeEl) up_imeEl.textContent = up_ime;
+    if (odjavaGumb) odjavaGumb.style.display = 'inline-block';
+
+    // Odjava
+    odjavaGumb?.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        window.location.href = '/prijava';
+    });
 });
