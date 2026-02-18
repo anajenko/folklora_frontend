@@ -120,6 +120,10 @@ form button {
     transition: background 0.2s;
 }
 
+#slika {
+    display:none;
+}
+
 form button:hover {
    background-color: #8f3c41;
 }

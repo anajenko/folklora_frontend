@@ -29,7 +29,7 @@ if (registerForm) {
         alert('Registracija uspešna! Prijavite se.');
         window.location.href = '/prijava';
       } else {
-        alert(json.message || `Napaka: ${res.status}`);
+        alert(json.message || `${res.status}`);
       }
     } catch (err) {
       console.error(err);

@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
             addLabelForm.reset();
             loadLabels();
         } catch (err) {
-            alert('Napaka pri dodajanju labele: ' + err.message);
+            alert(err.message);
         }
     });
 
@@ -107,6 +107,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const labelId = labelSpan.dataset.id;
 
         if (!materialId || !labelId) return;
+
+        const imeKosa = materialCard.dataset.ime;
+        const nazivLabele = labelSpan.dataset.naziv || labelSpan.textContent;
+
+        const potrdi = confirm(
+            `Ali res želite odstraniti labelo "${nazivLabele}" iz kosa "${imeKosa}"?`
+        );
+        if (!potrdi) {
+            return; // uporabnik je kliknil Cancel
+        }
 
         try {
             // DELETE request to remove label from material
@@ -159,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 } catch (err) {
                     console.error(err);
-                    alert("Napaka pri dodajanju labele: " + err.message);
+                    alert(err.message);
                 }
             });
         });

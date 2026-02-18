@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const div = document.createElement('div');
             div.classList.add('material-card');
             div.dataset.id = m.id;
+            div.dataset.ime = m.ime;
 
             const labelsHTML = (labelsMap[m.id] || [])
                 .map(l => `<span class="material-label" data-id="${l.id}">${l.naziv}</span>`)
@@ -112,6 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        // Preverimo, ali je izbrana datoteka
+        const fileInput = addForm.querySelector('input[type="file"]');
+        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            alert('Za uvoz kosa je potrebno izbrati datoteko z naprave.');
+            return; // ustavi submit
+        }
+        
         const formData = new FormData(addForm);
 
         try {
@@ -122,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (fileLabel) fileLabel.textContent = 'Izberi .jpg ali .jpeg datoteko z naprave';
             loadMaterial();
         } catch (err) {
-            alert('Napaka: ' + err.message);
+            alert(err.message);
         }
     });
 
@@ -160,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadMaterial();
 
         } catch (err) {
-            alert("Napaka pri brisanju kosa: " + err.message);
+            alert(err.message);
         }
     });
 
