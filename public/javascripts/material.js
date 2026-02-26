@@ -66,6 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
             div.classList.add('material-card');
             div.dataset.id = m.id;
             div.dataset.ime = m.ime;
+            if (m.poskodovano === 1) {
+                div.classList.add('poskodovano');
+            }
 
             const labelsHTML = (mapiraneLabele[m.id] || [])
                 .map(l => `<span class="material-label" data-id="${l.id}">${l.naziv}</span>`)
@@ -82,6 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </button>
             `;
 
+            let hasCommentIcon = false;
+
             try {
                 const komentarji = await fetchJSON(`http://localhost:3000/api/kosi/${m.id}/komentarji`);
                 if (komentarji.length > 0) {
@@ -91,9 +96,29 @@ document.addEventListener("DOMContentLoaded", () => {
                     icon.title = "Kos ima komentarje";
                     icon.classList.add("comment-icon");
                     div.appendChild(icon);
+                    hasCommentIcon = true; 
                 }
+                
             } catch (err) {
                 console.error("Napaka pri preverjanju komentarjev:", err);
+            }
+
+            if (m.poskodovano === 1) {
+                const damageIcon = document.createElement("img");
+                damageIcon.src = "/images/needle.png";
+                damageIcon.alt = "Poskodovano";
+                damageIcon.title = "Kos je poškodovan";
+                damageIcon.classList.add("damage-icon");
+                
+                // Place it **next to comment icon** in the left corner
+                // If there's a comment icon, place damage icon next to it
+                if (hasCommentIcon) {
+                    div.appendChild(damageIcon);
+                } else {
+                    // If no comment icon, it should take the comment icon's spot
+                    damageIcon.style.left = "8px"; // same as comment-icon left
+                    div.appendChild(damageIcon);
+                }
             }
 
             // Disable dragging the image

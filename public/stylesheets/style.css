@@ -282,6 +282,11 @@ form button:hover {
     object-fit: contain;
 }
 
+.material-card.poskodovano {
+    border: 2px solid #4e4e4e76;
+    background-color: #dddddd;
+}
+
 .material-labels {
     margin-top: 10px; /* adjust the value to your liking */
     display: flex;
@@ -305,13 +310,21 @@ form button:hover {
     font-size: 12px;
 }
 
-.comment-icon {
+.comment-icon, .damage-icon {
     position: absolute;
     top: 8px;
-    left: 8px;
     width: 22px;
     height: 22px;
     padding: 4px;
+}
+
+.comment-icon {
+    left: 8px;
+}
+
+/* If damage icon follows comment icon, move it to the right */
+.comment-icon + .damage-icon {
+    left: 40px;
 }
 
 /* ---------------- Responsive ---------------- */
@@ -389,7 +402,7 @@ form button:hover {
 
 #trash-container.dragover {
     color: white;
-    background-color: #ff4d4d;
+    background-color: #b05055;
     border-radius: 3px;
     padding: 0.1rem 0.3rem;
 }
