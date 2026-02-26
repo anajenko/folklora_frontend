@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
 
             try {
-                const komentarji = await fetchJSON(`http://localhost:3000/api/komentarji/kos/${m.id}`);
+                const komentarji = await fetchJSON(`http://localhost:3000/api/kosi/${m.id}/komentarji`);
                 if (komentarji.length > 0) {
                     const icon = document.createElement("img");
                     icon.src = "/images/comment.png";
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // preverimo komentarje
-            const komentarji = await fetchJSON(`http://localhost:3000/api/komentarji/kos/${id}`);
+            const komentarji = await fetchJSON(`http://localhost:3000/api/kosi/${id}/komentarji`);
             const imaKomentarje = komentarji.length > 0;
 
             // sestavimo sporočilo
