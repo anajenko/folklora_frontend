@@ -402,7 +402,7 @@ form button:hover {
 
 #trash-container.dragover {
     color: white;
-    background-color: #b05055;
+    background-color: #8f3c41;
     border-radius: 3px;
     padding: 0.1rem 0.3rem;
 }

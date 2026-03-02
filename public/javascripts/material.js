@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (m.poskodovano === 1) {
                 const damageIcon = document.createElement("img");
-                damageIcon.src = "/images/needle.png";
+                damageIcon.src = "/images/sew.png";
                 damageIcon.alt = "Poskodovano";
                 damageIcon.title = "Kos je poškodovan";
                 damageIcon.classList.add("damage-icon");
