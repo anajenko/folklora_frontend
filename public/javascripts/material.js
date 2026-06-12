@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </button>
             `;
 
-            let hasCommentIcon = false;
+            let imaIkonoKomentarja = false;
 
             try {
                 const komentarji = await fetchJSON(`http://localhost:3000/api/kosi/${m.id}/komentarji`);
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     icon.title = "Kos ima komentarje";
                     icon.classList.add("comment-icon");
                     div.appendChild(icon);
-                    hasCommentIcon = true; 
+                    imaIkonoKomentarja = true; 
                 }
                 
             } catch (err) {
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 // Place it **next to comment icon** in the left corner
                 // If there's a comment icon, place damage icon next to it
-                if (hasCommentIcon) {
+                if (imaIkonoKomentarja) {
                     div.appendChild(damageIcon);
                 } else {
                     // If no comment icon, it should take the comment icon's spot
@@ -149,6 +149,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(forma_kosi);
 
         try {
+            const tip_uporabnika = localStorage.getItem("tip_uporabnika");
+            if (tip_uporabnika !== "garderober/-ka") {
+                alert("Žal nimaš pravic za dodajanje kosov. Kose lahko dodajajo samo uporabniki tipa: garderober/-ka.");
+                return;
+            }
+
             const data = await fetchJSON('http://localhost:3000/api/kosi/', { method: 'POST', body: formData, skipJsonHeader: true });
             
             alert(data.message);
@@ -172,6 +178,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const imaLabele = karticaLabele.length > 0;
 
         try {
+            const tip_uporabnika = localStorage.getItem("tip_uporabnika");
+            if (tip_uporabnika !== "garderober/-ka") {
+                alert("Žal nimaš pravic za brisanje kosov. Kose lahko brišejo samo uporabniki tipa: garderober/-ka.");
+                return;
+            }
+
             // preverimo komentarje
             const komentarji = await fetchJSON(`http://localhost:3000/api/kosi/${id}/komentarji`);
             const imaKomentarje = komentarji.length > 0;
