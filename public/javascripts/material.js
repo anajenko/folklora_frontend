@@ -128,8 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             div.addEventListener('dragover', e => e.preventDefault());
             div.addEventListener('drop', e => handleLabelDrop(e, div));
 
-            // PREPEND into fragment (newest first)
-            frag.prepend(div);
+            frag.appendChild(div);
         }
 
         // Add everything to the DOM AT ONCE → no glitch
