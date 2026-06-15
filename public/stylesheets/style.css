@@ -571,3 +571,11 @@ header nav li {
 #current-user .username {
     font-weight: bold;    /* bold only username */
 }
+
+.labels-instruction {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 4px 0;
+    line-height: 1.4;
+    font-style: italic;
+}

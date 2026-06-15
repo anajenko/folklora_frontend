@@ -22,7 +22,7 @@
                       <input type="text" name="ime" placeholder="vnesi naziv kosa" required>
                   </div>
                   <div class="form-row">
-                      <label for="tip">Tip:</label>
+                      <span class="form-label">Tip:</span>
                       <label><input type="radio" name="tip" value="slika" checked required>slika</label>
                       <label><input type="radio" name="tip" value="audio" disabled>audio</label>
                       <label><input type="radio" name="tip" value="video" disabled>video</label>
@@ -45,7 +45,7 @@
                       <input type="text" name="naziv" placeholder="vnesi naziv labele" required>
                   </div>
                   <div class="form-row">
-                      <label for="tip" class="form-label" name="tip">Tip:</label>
+                      <span class="form-label">Tip:</span>
                       <div class="radio-group">
                         <label class="radio-item"><input type="radio" name="tip" value="pokrajina" required>pokrajina</label>
                         <label class="radio-item"><input type="radio" name="tip" value="tip_oblacila" required>tip oblačila</label>
@@ -70,6 +70,9 @@
         <i class="fas fa-trash-alt" title="Povleci labelo v smetnjak"></i>
         </span>
     </h2>
+    <p class="labels-instruction">
+        Povleci in spusti labelo na poljubni kos.
+    </p>
     <div id="labels-container"></div>
     </div>
   </main>
