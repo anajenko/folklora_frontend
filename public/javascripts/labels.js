@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let observer; // MutationObserver to attach drop listeners
 
-    // --- Load labels into sidebar ---
+    // nalaganje label v sidebar
     async function naloziLabele() {
         kontejner_labele.innerHTML = '';
         try {
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- Drag start for labels ---
+    // Drag start label
     kontejner_labele.addEventListener('dragstart', (e) => {
         if (e.target.classList.contains('material-label')) {
             e.dataTransfer.setData("text/plain", e.target.dataset.id);
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- Add new label ---
+    // Dodajanje label
     forma_labele.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(forma_labele);
@@ -84,13 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- Remove label from material card on click ---
+    // ob kliku na labelo jo odstrani iz kosa
     kontejner_kosi.addEventListener("click", async (e) => {
         const labelSpan = e.target.closest('.material-label');
         if (!labelSpan) return;
-
-        // Ignore if the click was on the "delete-label" button (for global labels)
-        if (e.target.classList.contains("delete-label")) return;
 
         const materialCard = labelSpan.closest('.material-card');
         if (!materialCard) return;
@@ -107,14 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
             `Ali res želite odstraniti labelo "${nazivLabele}" iz kosa "${imeKosa}"?`
         );
         if (!potrdi) {
-            return; // uporabnik je kliknil Cancel
+            return; // cancel
         }
 
         try {
-            // DELETE request to remove label from material
             const res = await fetchJSON(`http://localhost:3000/api/kosi/${materialId}/labele/${labelId}`, { method: 'DELETE', skipJson: true });
 
-            // Remove label from UI
+            // na UI izbriši labelo s kosa
             labelSpan.remove();
         } catch (err) {
             console.error(err);
@@ -122,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- Enable drag/drop on material cards ---
+    // Enable drag/drop on material cards
     function omogociDropNaKos() {
         // Disconnect observer to avoid infinite loop
         observer.disconnect();
@@ -155,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (![...labeleDiv.children].some(lbl => lbl.textContent === labelaNaziv)) {
                         const novaLabela = document.createElement('span');
                         novaLabela.classList.add('material-label');
-                        novaLabela.dataset.id = labelaId; // <-- important
+                        novaLabela.dataset.id = labelaId;
                         novaLabela.textContent = labelaNaziv;
                         labeleDiv.appendChild(novaLabela);
                     }
@@ -194,14 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (labelaVUporabi) {
             alert("Brisanje labele ni mogoče, ker obstajajo kosi, ki so označeni z njo. Odstranite labelo iz kosov in poskusite ponovno.");
-            return; // stop deletion
+            return;
         }
 
         try {
-            // DELETE label from database
             const res = await fetchJSON(`http://localhost:3000/api/labele/${labelId}`, { method: 'DELETE', skipJson: true });
-        
-            // Reload labels
             naloziLabele();
             alert('Labela je bila uspešno izbrisana!');
         } catch (err) {
@@ -213,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Initial load ---
     naloziLabele();
 
-    // MutationObserver ensures newly loaded materials are drop targets
+    // MutationObserver: omogoci drip na kos
     observer = new MutationObserver(omogociDropNaKos);
     observer.observe(kontejner_kosi, { childList: true });
 });

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const datotekaInput = document.getElementById('slika');
     const datotekaLabel = document.querySelector('.custom-file-label');
 
+    // napis na polju za izbiro datoteke
     datotekaInput.addEventListener('change', () => {
         datotekaLabel.textContent = datotekaInput.files.length
             ? datotekaInput.files[0].name
@@ -16,12 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleLabelDrop(e, materialCard) {
         e.preventDefault();
 
-        const labelaId = e.dataTransfer.getData('text/plain'); // the label id
-        const labelaNaziv = e.dataTransfer.getData('label-name'); // the label name
+        const labelaId = e.dataTransfer.getData('text/plain');
+        const labelaNaziv = e.dataTransfer.getData('label-name');
 
         if (!labelaId || !labelaNaziv) return;
 
-        // Append label to material card visually
+        // vizualno dodamo labelo na kos
         const kontejner_labele = materialCard.querySelector('.material-labels');
         if (kontejner_labele) {
             // Prevent duplicate labels
@@ -33,18 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 kontejner_labele.appendChild(znacka);
             }
         }
-
-        // Optionally: send to backend to save the label on this material
+        // v backendu dodamo labelo na kos
         fetchJSON(`http://localhost:3000/api/labele/dodaj/${materialCard.dataset.id}/${labelaId}`, { method: 'POST' });
     }
 
     async function naloziKartice() {
         const kosi = await fetchJSON('http://localhost:3000/api/kosi/');
 
-        // Clear container ONCE
+        // Clear container
         kontejner_kosi.innerHTML = '';
 
-        // Create fragment (fast, no glitch)
+        // Create fragment
         const frag = document.createDocumentFragment();
 
         // Pre-fetch all labels for all materials
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         );
 
-        // Build all cards in memory (no DOM writes yet)
+        // Build all cards in memory 
         for (const m of kosi) {
             const div = document.createElement('div');
             div.classList.add('material-card');
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             div.dataset.ime = m.ime;
             if (m.poskodovano === 1) {
                 div.classList.add('poskodovano');
-            }
+            } // dodamo css class
 
             const labelsHTML = (mapiraneLabele[m.id] || [])
                 .map(l => `<span class="material-label" data-id="${l.id}">${l.naziv}</span>`)
@@ -110,13 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 damageIcon.title = "Kos je poškodovan";
                 damageIcon.classList.add("damage-icon");
                 
-                // Place it **next to comment icon** in the left corner
-                // If there's a comment icon, place damage icon next to it
+                //lokacija: levo zgoraj (poleg ikone komentarja)
                 if (imaIkonoKomentarja) {
                     div.appendChild(damageIcon);
                 } else {
-                    // If no comment icon, it should take the comment icon's spot
-                    damageIcon.style.left = "8px"; // same as comment-icon left
+                    damageIcon.style.left = "8px";
                     div.appendChild(damageIcon);
                 }
             }
@@ -131,18 +129,17 @@ document.addEventListener("DOMContentLoaded", () => {
             frag.appendChild(div);
         }
 
-        // Add everything to the DOM AT ONCE → no glitch
+        // vse kartice dodamo naenkrat v DOM → no glitch
         kontejner_kosi.appendChild(frag);
     }
 
     forma_kosi.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Preverimo, ali je izbrana datoteka
         const fileInput = forma_kosi.querySelector('input[type="file"]');
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
             alert('Za uvoz kosa je potrebno izbrati datoteko z naprave.');
-            return; // ustavi submit
+            return;
         }
         
         const formData = new FormData(forma_kosi);
@@ -156,10 +153,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await fetchJSON('http://localhost:3000/api/kosi/', { method: 'POST', body: formData, skipJsonHeader: true });
             
-            alert(data.message);
-            forma_kosi.reset();
+            alert(data.message); // Kos uspešno dodan
+            forma_kosi.reset(); // počisti formo
             if (datotekaLabel) datotekaLabel.textContent = 'Izberi .jpg ali .jpeg datoteko z naprave';
-            naloziKartice();
+            naloziKartice(); // da se prikaže še novo dodan kos
         } catch (err) {
             alert(err.message);
         }
@@ -173,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const id = gumb.dataset.id;
 
         const kartica = gumb.closest('.material-card');
-        const karticaLabele = kartica.querySelectorAll('.material-label');
+        const karticaLabele = kartica.querySelectorAll('.material-label'); // poiščemo vse labele na kartici
         const imaLabele = karticaLabele.length > 0;
 
         try {
@@ -183,11 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // preverimo komentarje
             const komentarji = await fetchJSON(`http://localhost:3000/api/kosi/${id}/komentarji`);
             const imaKomentarje = komentarji.length > 0;
 
-            // sestavimo sporočilo
             let potrdi = "Ali ste prepričani, da želite izbrisati kos?";
 
             if (imaLabele || imaKomentarje) {
@@ -200,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const confirmed = confirm(potrdi);
             if (!confirmed) return;
 
-            // Če je potrjeno, izbrišemo kos
+            // if confirmed
             await fetchJSON(`http://localhost:3000/api/kosi/${id}`, { method: 'DELETE', skipJson: true });
             naloziKartice();
 

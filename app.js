@@ -10,7 +10,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // --- Root route ---
 app.get('/', (req, res) => {
-  // Render views/index.ejs
   res.render('index');
 });
 app.get('/prijava', (req, res) => res.render('login'));

@@ -1,7 +1,7 @@
 async function fetchJSON(url, options = {}) {
     const zeton = localStorage.getItem('token');
 
-    // Only add 'Content-Type: application/json' if not sending FormData
+    // json requesti potrebujejo 'Content-Type: application/json', formData uploadi ga ne smejo iemti
     const headers = {
         ...(options.skipJsonHeader ? {} : {'Content-Type': 'application/json'}),
         ...(options.headers || {})
@@ -17,7 +17,6 @@ async function fetchJSON(url, options = {}) {
     });
 
     if (response.status === 401) {
-        // če token ne obstaja ali je potekel
         localStorage.removeItem('token');
         alert('Seja je potekla. Prosimo prijavite se ponovno.');
         window.location.href = '/prijava';
@@ -37,7 +36,7 @@ async function fetchJSON(url, options = {}) {
         throw new Error(errorMessage);
     }
 
-    if (options.skipJson) return response; // just return the raw response
+    if (options.skipJson) return response; // return raw response
     return response.json();
 }
 
@@ -53,21 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentPath === '/prijava' || currentPath === '/registracija') {
         if (uporabnikEl) uporabnikEl.style.display = 'none';
         if (odjavaGumb) odjavaGumb.style.display = 'none';
-        return; // ne izvajamo ostale logike za header
+        return;
     }
 
     const up_ime = localStorage.getItem('username');
     const zeton = localStorage.getItem('token');
     
     if (!zeton || !up_ime) {
-        // Če ni prijavljenega uporabnika ali tokena, skrij elemente
+        // skrij elemente
         if (uporabnikEl) uporabnikEl.style.display = 'none';
         if (odjavaGumb) odjavaGumb.style.display = 'none';
         return;
     }
 
-    // Prikaz uporabnika
-    if (labelaEl) labelaEl.textContent = 'Prijavljeni uporabnik:'; // ali ostane prazno
+    // Prikaz uporabnika v headerju
+    if (labelaEl) labelaEl.textContent = 'Prijavljeni uporabnik:';
     if (up_imeEl) up_imeEl.textContent = up_ime;
     if (odjavaGumb) odjavaGumb.style.display = 'inline-block';
 
