@@ -57,7 +57,7 @@ if (forma_login) {
       });
 
       const json = await res.json();
-      if (res.ok) { // HTTP 200–299
+      if (res.ok) { // HTTP 200–299 -> shrani podatke v browser localStorage
         localStorage.setItem('token', json.token);
         localStorage.setItem('username', json.uporabnisko_ime);
         localStorage.setItem('tip_uporabnika', json.tip_uporabnika);

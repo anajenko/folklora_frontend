@@ -34,8 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 kontejner_labele.appendChild(znacka);
             }
         }
-        // v backendu dodamo labelo na kos
-        fetchJSON(`http://localhost:3000/api/labele/dodaj/${materialCard.dataset.id}/${labelaId}`, { method: 'POST' });
+        // v backendu dodamo labelo na kos <-- labels.js to uredi
     }
 
     async function naloziKartice() {
